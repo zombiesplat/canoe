@@ -6,8 +6,8 @@ import navigation from "./modules/navigation";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-    state: {},
-    modules: {
-        navigation,
-    }
+  state: {},
+  modules: {
+    navigation,
+  }
 });

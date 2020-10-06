@@ -15,14 +15,27 @@ import vuetify from '@/plugins/vuetify' // path to vuetify export
 import router from '@/router';
 import {store} from "@/store";
 
-Object.defineProperty(Vue.prototype, '$_', { value: _ });
+Object.defineProperty(Vue.prototype, '$_', {value: _});
 window.bus = new Vue();
+
+import VCurrencyField from 'v-currency-field'
+
+Vue.use(VCurrencyField, {
+  locale: 'en',
+  decimalLength: 2,
+  autoDecimalMode: true,
+  min: null,
+  max: null,
+  defaultValue: 0,
+  valueAsInteger: false,
+  allowNegative: true
+});
 
 import App from '@/App';
 
 new Vue({
-    vuetify,
-    router,
-    store,
-    render: h => h(App),
+  vuetify,
+  router,
+  store,
+  render: h => h(App),
 }).$mount('#app')

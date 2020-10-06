@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Client;
 use App\Models\Fund;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ClientFactory extends Factory
+class FundFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Client::class;
+    protected $model = Fund::class;
 
     /**
      * Define the model's default state.
@@ -23,12 +22,10 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'permission' => $this->faker->randomElements(
-                Fund::TYPES,
-                $this->faker->numberBetween(1, count(Fund::TYPES))
-            ),
-            'description' => $this->faker->sentence(3)
+            'name' => $this->faker->company,
+            'type' => $this->faker->randomElement(Fund::TYPES),
+            'inception_date' => $this->faker->dateTimeInInterval('-1 year', '-1 day'),
+            'description' => $this->faker->sentence(4),
         ];
     }
 }

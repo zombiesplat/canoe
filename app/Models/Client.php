@@ -9,14 +9,6 @@ class Client extends Model
 {
     use HasFactory;
 
-    const PERMISSIONS = [
-        'HF',
-        'PL',
-        'VC',
-        'RE',
-        'PC',
-    ];
-
     protected $fillable = [
         'name',
         'permission',
@@ -26,4 +18,45 @@ class Client extends Model
     protected $casts = [
         'permission' => 'json',
     ];
+
+    /**********************************************************************
+     * RELATIONSHIPS
+     **********************************************************************/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function funds()
+    {
+        return $this->hasManyThrough(Fund::class, Investment::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function cashFlows()
+    {
+        return $this->hasManyThrough(CashFlow::class, Investment::class);
+    }
+
+    /**********************************************************************
+     * METHODS
+     **********************************************************************/
+
+    /**
+     * @param Fund $fund
+     * @return bool
+     */
+    public function canViewFund(Fund $fund)
+    {
+        return in_array($fund->type, $this->permission);
+    }
 }
